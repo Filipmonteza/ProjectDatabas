@@ -10,6 +10,7 @@ public class Order
     // Foreign-Key
     public int CustomerId { get; set; }
     
+    // Properties
     [Required, MaxLength(50)]
     public string? OrderStatus { get; set; }
     [Required]

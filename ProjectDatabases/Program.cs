@@ -2,7 +2,7 @@
 
 Console.WriteLine(Path.Combine(AppContext.BaseDirectory, "Shop.db"));
 
-// Extracting seeding - from (DataSeeding).
+// Extracting seeding - from (OriginalSeed).
 await OrginalSeed.SeedAsync();
 
 // Main Menu
@@ -19,17 +19,26 @@ while(true)
     var choice = Console.ReadLine();
     if (choice == "1")
         await CustomerMenu();
-    else if (choice == "2")
-        await OrderMenu();
-    else if (choice == "3")
-        await ProductMenu;
-    else if (choice == "4")
-        await CategoryMenu;
-    else if (choice == "5")
-        break;
-    else
-    {
-        Console.WriteLine("Invalid choice");
-    }
+    // else if (choice == "2")
+    //     await OrderMenu();
+    // else if (choice == "3")
+    //     await ProductMenu;
+    // else if (choice == "4")
+    //     await CategoryMenu;
+    // else if (choice == "5")
+    //     break;
+    // else
+    // {
+    //     Console.WriteLine("Invalid choice");
+    // }
+}
 
+static async Task CustomerMenu()
+{
+    while(true)
+    {
+        Console.WriteLine("\nCustomer Menu: 1. List | 2. Add | 3. Edit | 4. Delete | 5. MainMenu");
+        Console.WriteLine(">");
+        
+    }
 }

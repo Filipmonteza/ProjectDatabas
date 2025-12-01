@@ -26,7 +26,7 @@ public static class OrginalSeed
                 new Product { ProductName = "Luxor 55 - LX5540UHD", ProductPrice = 12500}
             );
             await db.SaveChangesAsync();
-            Console.WriteLine("Customers Products Db");
+            Console.WriteLine("Seeded Products Db");
         }
 
         if (!await db.Categories.AnyAsync())
@@ -36,7 +36,7 @@ public static class OrginalSeed
                 new Category { CategoryName = "Tv", Description = "4K UHD televisions and smart TVs" }
             );
             await db.SaveChangesAsync();
-            Console.WriteLine("Categories Db");
+            Console.WriteLine("Seeded Categories Db");
         }
     }
     

@@ -7,6 +7,7 @@ public class Customer
     // Prime-Key
     public int CustomerId { get; set; }
     
+    // Properties
     [Required, MaxLength(50)]
     public string? CustomerName { get; set; }
     [Required, MaxLength(50)]
