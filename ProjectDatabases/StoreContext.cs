@@ -11,8 +11,9 @@ public class StoreContext : DbContext
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
     
-    // View -- nytt
+    // View OrderSummary/CustomerOrderCountView
     public DbSet<OrderSummary> OrderSummaries => Set<OrderSummary>();
+    public DbSet<CustomerOrderCountView> CustomerOrderCountViews=> Set<CustomerOrderCountView>();
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -22,11 +23,18 @@ public class StoreContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // OrderSummary NYTTTTTT
+        // OrderSummary View
         modelBuilder.Entity<OrderSummary>(o =>
         {
             o.HasNoKey(); // saknar PK alltså har ingen primärnyckel
             o.ToView("OrderSummaryView"); // kopplar tabellen mot SQLite
+        });
+        
+        // CustomerOrderCountViews
+        modelBuilder.Entity<CustomerOrderCountView>(c =>
+        {   
+            c.HasNoKey(); // saknar PK alltså har ingen primärnyckel
+            c.ToView("CustomerOrderCountView"); // kopplar tabellen mot SQLite
         });
         
         modelBuilder.Entity<Customer>(c =>

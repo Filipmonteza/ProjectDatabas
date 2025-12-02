@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\ProjectDatabases\\ProjectDatabases.csproj": {}
+    "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\projectdatabases\\ProjectDatabases.csproj": {}
   },
   "projects": {
-    "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\ProjectDatabases\\ProjectDatabases.csproj": {
+    "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\projectdatabases\\ProjectDatabases.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\ProjectDatabases\\ProjectDatabases.csproj",
+        "projectUniqueName": "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\projectdatabases\\ProjectDatabases.csproj",
         "projectName": "ProjectDatabases",
-        "projectPath": "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\ProjectDatabases\\ProjectDatabases.csproj",
+        "projectPath": "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\projectdatabases\\ProjectDatabases.csproj",
         "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\ProjectDatabases\\obj\\",
+        "outputPath": "C:\\Users\\filip\\Desktop\\Inlämningsuppgift databas2\\ProjectDatabases\\projectdatabases\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

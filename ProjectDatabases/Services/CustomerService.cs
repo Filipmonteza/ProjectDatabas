@@ -123,4 +123,18 @@ public class CustomerService
             Console.WriteLine(exception.Message);
         }
     }
+
+    public static async Task CustomerOrderCountViews()
+    {
+        using var db = new StoreContext();
+        var cocV = await db.CustomerOrderCountViews
+            .OrderByDescending(c=> c.CustomerId)
+            .ToListAsync();
+        
+        Console.WriteLine("CustomerId | CustomerName | CustomerEmail | NumberOfOrders");
+        foreach (var customer in cocV)
+        {
+            Console.WriteLine($"{customer.CustomerId} | {customer.CustomerName} | {customer.CustomerEmail} | {customer.NumberOfOrders}");
+        }
+    }
 }

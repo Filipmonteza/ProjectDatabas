@@ -88,7 +88,7 @@ static async Task CustomerMenu()
     {
         while (true)
         {
-            Console.WriteLine("\nCustomer Menu: 1. List | 2. Add | 3. Edit | 4. Delete | 5. MainMenu ");
+            Console.WriteLine("\nCustomer Menu: 1. List | 2. Add | 3. Edit | 4. Delete | \n| 5. CustomerOrderCount | 6. MainMenu ");
             Console.WriteLine(">");
 
             var line = Console.ReadLine()?.Trim() ?? string.Empty;
@@ -121,7 +121,6 @@ static async Task CustomerMenu()
                         Console.WriteLine("Usage: User Entry (Edit) = 3, (ID Number) -> (Enter) >");
                         break;
                     }
-
                     await CustomerService.CustomerEditAsync(editId);
                     break;
                 case "4":
@@ -134,6 +133,9 @@ static async Task CustomerMenu()
                     await CustomerService.CustomerDeleteAsync(deleteId);
                     break;
                 case "5":
+                    await CustomerService.CustomerOrderCountViews();
+                    break;
+                case "6":
                     return;
                 default:
                     Console.WriteLine("Unkown Command.");

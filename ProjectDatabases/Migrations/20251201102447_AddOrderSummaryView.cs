@@ -63,7 +63,7 @@ namespace ProjectDatabases.Migrations
                    SET OrderTotalPrice = (
                    SELECT IFNULL (SUM(OrderRowQuantity * OrderRowUnitPrice), 0)
                    FROM OrderRows
-                   WHERE OrderId = OLD.OrderId;
+                   WHERE OrderId = OLD.OrderId
                 )
                  WHERE OrderId = OLD.OrderId;
             END;
