@@ -11,6 +11,9 @@ public class StoreContext : DbContext
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
     
+    // View -- nytt
+    public DbSet<OrderSummary> OrderSummaries => Set<OrderSummary>();
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var dbPath = Path.Combine(AppContext.BaseDirectory, "Shop.db");
@@ -19,6 +22,13 @@ public class StoreContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // OrderSummary NYTTTTTT
+        modelBuilder.Entity<OrderSummary>(o =>
+        {
+            o.HasNoKey(); // saknar PK alltså har ingen primärnyckel
+            o.ToView("OrderSummaryView"); // kopplar tabellen mot SQLite
+        });
+        
         modelBuilder.Entity<Customer>(c =>
         {
             c.HasKey(x => x.CustomerId);
@@ -88,8 +98,9 @@ public class StoreContext : DbContext
             c.Property(x => x.CategoryName).HasMaxLength(50).IsRequired();
             c.Property(x => x.Description).HasMaxLength(50);
         });
-
-
+        
+       
+        
 
 
 
