@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace ProjectDatabases.Models.ViewModels;
-
+/// <summary>
+/// View Model for CustomerOrderCountView
+/// </summary>
 [Keyless]
 public class CustomerOrderCountView
 {

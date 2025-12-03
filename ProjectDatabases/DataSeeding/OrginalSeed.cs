@@ -19,7 +19,6 @@ public static class OrginalSeed
             Console.WriteLine("Seeded Customers Db");
         }
         
-        
         if (!await db.Categories.AnyAsync())
         {
             db.Categories.AddRange(

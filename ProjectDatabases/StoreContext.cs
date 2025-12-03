@@ -12,7 +12,7 @@ public class StoreContext : DbContext
     public DbSet<Category> Categories => Set<Category>();
    
     
-    // View OrderSummary/CustomerOrderCountView
+    // View OrderSummary/CustomerOrderCountView/ProductSalesView - Keyless
     public DbSet<OrderSummary> OrderSummaries => Set<OrderSummary>();
     public DbSet<CustomerOrderCountView> CustomerOrderCountViews=> Set<CustomerOrderCountView>();
     public DbSet<ProductSalesView>  ProductSalesViews => Set<ProductSalesView>();
@@ -49,24 +49,30 @@ public class StoreContext : DbContext
         
         modelBuilder.Entity<Customer>(c =>
         {
+            // Prime-Key
             c.HasKey(x => x.CustomerId);
             
+            // Properties
             c.Property(x=> x.CustomerName).HasMaxLength(50);
             c.Property(x => x.CustomerAddress).HasMaxLength(50);
             c.Property(x => x.CustomerEmail).HasMaxLength(50);
             
+            // UNIQUE
             c.HasIndex(x => x.CustomerEmail).IsUnique();
 
         });
 
         modelBuilder.Entity<Order>(o =>
-        {
+        {   
+            //Prime-Key
             o.HasKey(x => x.OrderId);
-
+            
+            //Properties
             o.Property(x => x.OrderDate);
             o.Property(x => x.OrderTotalPrice).IsRequired();
             o.Property(x => x.OrderStatus).IsRequired().HasMaxLength(50);
             
+            // Foreign-Key
             o.HasOne(x=>x.Customer)
                 .WithMany(x=>x.Orders)
                 .HasForeignKey(x => x.CustomerId)
@@ -75,8 +81,10 @@ public class StoreContext : DbContext
 
         modelBuilder.Entity<OrderRow>(o =>
         {
+            // Prime-Key
             o.HasKey(x => x.OrderRowId);
-
+            
+            // Properties
             o.Property(x => x.OrderRowUnitPrice).IsRequired();
             o.Property(x => x.OrderRowQuantity).IsRequired();
             

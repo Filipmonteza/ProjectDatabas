@@ -1,5 +1,11 @@
-﻿namespace ProjectDatabases.Models.ViewModels;
+﻿using Microsoft.EntityFrameworkCore;
 
+
+namespace ProjectDatabases.Models.ViewModels;
+/// <summary>
+/// View Model for ProductSalesView
+/// </summary>
+[Keyless]
 public class ProductSalesView
 {
     public int ProductId { get; set; }

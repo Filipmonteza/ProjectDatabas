@@ -22,22 +22,6 @@ public class CategoryService
         {
             Console.WriteLine($"{category.CategoryId} | {category.CategoryName} | {category.Description}");
         }
-            
-        // List Products
-        // var products = await db.Products
-        //     .AsNoTracking()
-        //     .OrderBy(p => p.ProductId)
-        //     .ToListAsync();
-        //
-        //
-        //
-        // Console.WriteLine("\n=== Products ===");
-        // Console.WriteLine("ProductId | ProductName | ProductPrice | CategoryId");
-        //
-        // foreach (var product in products)
-        // {
-        //     Console.WriteLine($"{product.ProductId} | {product.ProductName}  | {product.ProductPrice} | {product.CategoryId}");
-        // }
     }
 
     /// <summary>
