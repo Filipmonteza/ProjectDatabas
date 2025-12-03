@@ -4,7 +4,8 @@ namespace ProjectDatabases.Services;
 
 public class CategoryService
 {
-     public static async Task ListCategoryAsync()
+     
+    public static async Task ListCategoryAsync()
     {
         using var db = new StoreContext();
         
