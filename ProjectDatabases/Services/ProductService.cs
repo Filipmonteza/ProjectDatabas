@@ -158,4 +158,21 @@ public class ProductService
             Console.WriteLine("DB Error: " + exception.GetBaseException().Message);
         }
     }
+
+    public static async Task ProductSalesViews()
+    {
+        using var db = new StoreContext();
+        
+        var products = await db.ProductSalesViews
+            .AsNoTracking()
+            .OrderBy(p => p.ProductId)
+            .ToListAsync();
+        Console.WriteLine("== Product Summery ==");
+        Console.WriteLine("ProductId | ProductName | TotalQuantitySold");
+        foreach (var product in products)
+        {
+            Console.WriteLine($"{product.ProductId} | {product.ProductName}  | {product.TotalQuantitySold}");
+        }
+        
+    }
 }

@@ -217,7 +217,9 @@ static async Task ProductMenu()
             Console.WriteLine("2. (Add) Product.");
             Console.WriteLine("3. (Edit) Product.");
             Console.WriteLine("4. (Delete) Product.");
-            Console.WriteLine("5. Main Menu.");
+            Console.WriteLine("5. (TotalSales) Product.");
+            Console.WriteLine("6. Main Menu.");
+            
             Console.WriteLine(">");
 
             var line = Console.ReadLine()?.Trim() ?? string.Empty;
@@ -263,6 +265,9 @@ static async Task ProductMenu()
                     await ProductService.DeleteProductAsync(deleteId);
                      break;
                 case "5":
+                    await  ProductService.ProductSalesViews();
+                    break;
+                case "6":
                     return;
                 default:
                     Console.WriteLine("Unkown Command.");

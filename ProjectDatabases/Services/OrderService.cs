@@ -133,8 +133,8 @@ public class OrderService
             newOrder.OrderRows.Add(orderRow);
         }
         
-        // 
-        newOrder.OrderTotalPrice = newOrder.OrderRows.Sum(o => o.OrderRowQuantity * o.OrderRowUnitPrice);
+        // : TODO lägg denna i IREADME förklara att denna inte behövs längre.
+        // newOrder.OrderTotalPrice = newOrder.OrderRows.Sum(o => o.OrderRowQuantity * o.OrderRowUnitPrice);
         
         // Sparar och lägger till 
         db.Orders.Add(newOrder);

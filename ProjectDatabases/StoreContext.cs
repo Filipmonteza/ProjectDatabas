@@ -10,10 +10,12 @@ public class StoreContext : DbContext
     public DbSet<OrderRow> OrderRows => Set<OrderRow>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
+   
     
     // View OrderSummary/CustomerOrderCountView
     public DbSet<OrderSummary> OrderSummaries => Set<OrderSummary>();
     public DbSet<CustomerOrderCountView> CustomerOrderCountViews=> Set<CustomerOrderCountView>();
+    public DbSet<ProductSalesView>  ProductSalesViews => Set<ProductSalesView>();
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,6 +25,14 @@ public class StoreContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+       
+        // ProductSalesView
+        modelBuilder.Entity<ProductSalesView>(p =>
+        {
+            p.HasNoKey();
+            p.ToView("ProductSalesView");
+        });
+        
         // OrderSummary View
         modelBuilder.Entity<OrderSummary>(o =>
         {
