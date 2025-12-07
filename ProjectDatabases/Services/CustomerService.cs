@@ -68,21 +68,21 @@ public class CustomerService
             return;
         }
        
-        Console.WriteLine($"{customer.CustomerName}");
+        Console.WriteLine($"Edit: {customer.CustomerName}");
         var customername = Console.ReadLine()?.Trim() ?? string.Empty;
         if (!string.IsNullOrEmpty(customername))
         {
             customer.CustomerName = customername;
         }
 
-        Console.WriteLine($"{customer.CustomerEmail}");
+        Console.WriteLine($"Edit: {customer.CustomerEmail}");
         var customeremail = Console.ReadLine()?.Trim() ?? string.Empty;
         if (!string.IsNullOrEmpty(customeremail))
         {
             customer.CustomerEmail = customeremail;
         }
         
-        Console.WriteLine($"{customer.CustomerAddress}");
+        Console.WriteLine($"Edit: {customer.CustomerAddress}");
         var customerAddress = Console.ReadLine()?.Trim() ?? string.Empty;
         if (!string.IsNullOrEmpty(customerAddress))
         {

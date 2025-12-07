@@ -8,16 +8,6 @@ public static class OrginalSeed
     {
         using var db = new StoreContext();
         await db.Database.MigrateAsync();
-
-        if (!await db.Customers.AnyAsync())
-        {
-            db.Customers.AddRange(
-                new Customer{CustomerName = "Lasse", CustomerEmail = "Lasse@hotmail.com", CustomerAddress = "Alhagsvägen 3" },
-                new Customer{CustomerName = "Alex", CustomerEmail = "Alex@hotmail.com", CustomerAddress = "Friggsvägen 3"}
-                );
-            await db.SaveChangesAsync();
-            Console.WriteLine("Seeded Customers Db");
-        }
         
         if (!await db.Categories.AnyAsync())
         {

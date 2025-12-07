@@ -35,7 +35,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Customer", b =>
@@ -64,7 +64,7 @@ namespace ProjectDatabases.Migrations
                     b.HasIndex("CustomerEmail")
                         .IsUnique();
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Order", b =>
@@ -91,7 +91,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.OrderRow", b =>
@@ -118,7 +118,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderRows");
+                    b.ToTable("OrderRows", (string)null);
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Product", b =>
@@ -142,7 +142,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.ViewModels.CustomerOrderCountView", b =>

@@ -14,8 +14,7 @@ while(true)
     Console.WriteLine("2. Orders: ");
     Console.WriteLine("3. Products: ");
     Console.WriteLine("4. Category: ");
-    Console.WriteLine("5. JSONCustomer");
-    Console.WriteLine("6. Exit: ");
+    Console.WriteLine("5. Exit");
     Console.WriteLine(">");
     
     var choice = Console.ReadLine();
