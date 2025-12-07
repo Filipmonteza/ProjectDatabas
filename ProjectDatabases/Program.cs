@@ -14,7 +14,8 @@ while(true)
     Console.WriteLine("2. Orders: ");
     Console.WriteLine("3. Products: ");
     Console.WriteLine("4. Category: ");
-    Console.WriteLine("5. Exit: ");
+    Console.WriteLine("5. JSONCustomer");
+    Console.WriteLine("6. Exit: ");
     Console.WriteLine(">");
     
     var choice = Console.ReadLine();
@@ -28,10 +29,7 @@ while(true)
         await CategoryMenu();
     else if (choice == "5")
         break;
-    else
-    {
-        Console.WriteLine("Invalid choice");
-    }
+
 }
 
 
@@ -40,7 +38,7 @@ static async Task OrderMenu()
     while (true)
     {
         Console.WriteLine(
-            "\nOrder Menu: (1). OrderList | (2). OrderAdd | (3). OrderDetails \n(4). Status-Menu | (5). OrderSummery | (6). MainMenu");
+            "\nOrder Menu: (1). OrderList | (2). OrderAdd | (3). OrderDetails \n(4). Status-Menu | (5). OrderSummery | (6). OrderDetailView | (7). MainMenu");
         Console.WriteLine(">");
         var line = Console.ReadLine()?.Trim() ?? string.Empty;
 
@@ -75,7 +73,10 @@ static async Task OrderMenu()
             case "5":
                 await OrderService.ListOrderSummery();
                 break;
-            case "6":
+            case"6":
+                await OrderService.OrderViewDetail();
+                break;
+            case "7":
                 return;
             default:
                 Console.WriteLine("Unkown Command.");
@@ -276,6 +277,11 @@ static async Task ProductMenu()
 
         }
     }
+
+
+    
+
+
 
 
 

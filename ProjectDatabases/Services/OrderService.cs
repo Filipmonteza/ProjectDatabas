@@ -54,12 +54,12 @@ public class OrderService
                 var rowTotal = orderRow.OrderRowQuantity * orderRow.OrderRowUnitPrice; // 1 Rad
                 Console.WriteLine($"{order.OrderId} | {orderRow.Product?.ProductName} | {orderRow.OrderRowQuantity} | {orderRow.OrderRowUnitPrice} | {rowTotal}");
             }
+            
             var orderTotal = order.OrderRows.Sum(o => o.OrderRowQuantity * o.OrderRowUnitPrice);
             Console.WriteLine($"Total Amount: {orderTotal}");
-            
         }
-        
     }
+    
     public static async Task OrderAddAsync()
     {
         await CustomerService.CustomerListAsync();
@@ -95,8 +95,7 @@ public class OrderService
             OrderStatus = "Pending",
             OrderRows = new List<OrderRow>()
         };
-
-
+        
         while (true)
         {
             Console.WriteLine("Enter Product ID, Or 'done' to exit:");
@@ -123,7 +122,6 @@ public class OrderService
                 continue;
             }
             
-
             var orderRow = new OrderRow
             {
                 ProductId = productId,
@@ -133,14 +131,11 @@ public class OrderService
             newOrder.OrderRows.Add(orderRow);
         }
         
-        // : TODO lägg denna i IREADME förklara att denna inte behövs längre.
-        // newOrder.OrderTotalPrice = newOrder.OrderRows.Sum(o => o.OrderRowQuantity * o.OrderRowUnitPrice);
-        
-        // Sparar och lägger till 
+        // Saving and adding
         db.Orders.Add(newOrder);
         await db.SaveChangesAsync();
         
-        // Utskrift
+        // Printing
         Console.WriteLine($" Order ID: {newOrder.OrderId} created for {customer.CustomerName} with total {newOrder.OrderTotalPrice} Status {newOrder.OrderStatus}");
     }
     
@@ -156,7 +151,6 @@ public class OrderService
             if (line.Equals("exit", StringComparison.OrdinalIgnoreCase))
             {
                 break;
-
             }
             
             var parts =  line.Split(' ', StringSplitOptions.RemoveEmptyEntries );
@@ -221,7 +215,6 @@ public class OrderService
         {
             Console.WriteLine($"{order.OrderId} | {order.Customer?.CustomerName} | {order.OrderTotalPrice} | {order.OrderDate:d} |{order.OrderStatus}");
         }
-        
     }
     
      public static async Task OrdersPage(int page, int pageSize)
@@ -278,5 +271,20 @@ public class OrderService
             Console.WriteLine("Unknown command.");
         }
     }
-     
+
+    public static async Task OrderViewDetail()
+    {
+        using var db = new StoreContext();
+        var orderDetail = await db.OrderDetailViews
+            .OrderByDescending(o=>o.OrderDate)
+            .ToListAsync();
+       
+        Console.WriteLine("OrderDetailView");
+        Console.WriteLine(" OrderId | CustomerName | OrderTotalPrice | OrderDate");
+        foreach (var orderDetailView in orderDetail)
+        {
+            Console.WriteLine($"{orderDetailView.OrderId} | {orderDetailView.CustomerName} | {orderDetailView.TotalAmount} | {orderDetailView.OrderDate}");
+            
+        }
+    }
 }

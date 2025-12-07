@@ -2,6 +2,7 @@
 
 namespace ProjectDatabases.Models;
 
+
 public class Customer
 {
     // Prime-Key
