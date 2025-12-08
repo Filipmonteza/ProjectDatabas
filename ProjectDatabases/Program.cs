@@ -6,7 +6,7 @@ Console.WriteLine(Path.Combine(AppContext.BaseDirectory, "Shop.db"));
 // Extracting seeding - from (OriginalSeed).
 await OrginalSeed.SeedAsync();
 
-// Main Menu
+// Main Menu with a switch to redirect to sub-menus.
 while(true)
 {
     Console.WriteLine("\nChoose an option: ");
@@ -45,7 +45,7 @@ static async Task OrderMenu()
         {
             continue;
         }
-
+        
         var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         var cmd = parts[0];
 
@@ -84,7 +84,7 @@ static async Task OrderMenu()
     }
 }
  
-// Customer-Menu with easy switch redirect to (CustomerService methods)
+// Customer-Menu with a switch redirect to (CustomerService methods)
 static async Task CustomerMenu()
     {
         while (true)

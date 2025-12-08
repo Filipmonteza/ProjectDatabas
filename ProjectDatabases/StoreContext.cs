@@ -1,14 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProjectDatabases.Models;
-
-namespace ProjectDatabases;
+﻿namespace ProjectDatabases;
 
 public class StoreContext : DbContext
 {
+    // Customers table
     public DbSet<Customer> Customers => Set<Customer>();
+    
+    // Orders table
     public DbSet<Order> Orders => Set<Order>();
+    
+    // OrderRows table
     public DbSet<OrderRow> OrderRows => Set<OrderRow>();
+    
+    // Products table
     public DbSet<Product> Products => Set<Product>();
+    
+    // Categories table
     public DbSet<Category> Categories => Set<Category>();
    
     
@@ -24,9 +30,11 @@ public class StoreContext : DbContext
         optionsBuilder.UseSqlite($"Filename={dbPath}");
     }
 
+    /// <summary>
+    /// Configures the SQLite database connection.
+    /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
         // OrderDetailsView
         modelBuilder.Entity<OrderDetailView>(o =>
         {
@@ -130,14 +138,9 @@ public class StoreContext : DbContext
             // Prime-Key
             c.HasKey(x => x.CategoryId);
             
+            // Properties
             c.Property(x => x.CategoryName).HasMaxLength(50).IsRequired();
             c.Property(x => x.Description).HasMaxLength(50);
         });
-        
-       
-        
-
-
-
     }
 }
