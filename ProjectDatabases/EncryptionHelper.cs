@@ -2,7 +2,7 @@
 
 public class EncryptionHelper
 {
-    private const byte Key = 0x42; // 6bytes
+    private const byte Key = 0x42; // 66 bytes 
 
     public static string Encrypt(string text)
     {

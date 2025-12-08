@@ -15,7 +15,7 @@ public class Customer
     public string? CustomerAddress { get; set; }
     [Required, MaxLength(50)]
     
-    // Encrypting-Decrypting
+    // Encrypting-Decrypting email.
     private string? _customerEmail;
     [Required, MaxLength(50)]
     public string? CustomerEmail

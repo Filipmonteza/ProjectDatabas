@@ -28,9 +28,7 @@ while(true)
         await CategoryMenu();
     else if (choice == "5")
         break;
-
 }
-
 
 static async Task OrderMenu()
 {
@@ -209,7 +207,6 @@ static async Task CategoryMenu()
     }
 static async Task ProductMenu()
     {
-        
         while (true)
         {
             Console.WriteLine("\n== Products ==");
@@ -273,7 +270,6 @@ static async Task ProductMenu()
                     Console.WriteLine("Unkown Command.");
                     break;
             }
-
         }
     }
 
