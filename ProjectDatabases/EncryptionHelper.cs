@@ -28,8 +28,8 @@ public class EncryptionHelper
         {
             return krypteratText;
         }
+        
         // Gör en Base-64 till byta igen
-
         var bytes = Convert.FromBase64String(krypteratText);
 
         for (int i = 0; i < bytes.Length; i++)

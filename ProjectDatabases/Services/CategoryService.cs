@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace ProjectDatabases.Services;
+﻿namespace ProjectDatabases.Services;
 
 public class CategoryService
 {
