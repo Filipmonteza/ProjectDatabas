@@ -13,7 +13,7 @@ public class Order
     public string? OrderStatus { get; set; }
     [Required]
     public decimal OrderTotalPrice { get; set; }
-    public DateTime OrderDate { get; set; }
+    public DateTime OrderDate { get; set; } = DateTime.Now;
     
     // Navigation
     public Customer? Customer { get; set; }
