@@ -1,5 +1,6 @@
 ﻿namespace ProjectDatabases.Models;
 
+// Public class for Category with properties
 public class Category
 {
     // Prime-Key

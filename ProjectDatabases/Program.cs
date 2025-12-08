@@ -30,6 +30,7 @@ while(true)
         break;
 }
 
+// Order-Menu with a switch to redirect to (OrderServices methods).
 static async Task OrderMenu()
 {
     while (true)
@@ -83,6 +84,7 @@ static async Task OrderMenu()
     }
 }
  
+// Customer-Menu with easy switch redirect to (CustomerService methods)
 static async Task CustomerMenu()
     {
         while (true)
@@ -139,6 +141,7 @@ static async Task CustomerMenu()
         }
     }
 
+// Category-Menu Easy switch to redirect to (CategoryService methods)
 static async Task CategoryMenu()
     {
         while (true)
@@ -196,6 +199,8 @@ static async Task CategoryMenu()
 
         }
     }
+
+// Product-Menu with a switch to redirect to (ProductService methods)
 static async Task ProductMenu()
     {
         while (true)
@@ -257,7 +262,6 @@ static async Task ProductMenu()
             }
         }
     }
-
 
     
 

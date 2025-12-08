@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace ProjectDatabases.Models.ViewModels;
 
-namespace ProjectDatabases.Models.ViewModels;
-
+// OrdeDetailview Model for View properties
 [Keyless]
 public class OrderDetailView
 {

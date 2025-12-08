@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace ProjectDatabases.DataSeeding;
+﻿namespace ProjectDatabases.DataSeeding;
 
 public static class OrginalSeed
 {

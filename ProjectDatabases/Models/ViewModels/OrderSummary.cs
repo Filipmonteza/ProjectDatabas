@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace ProjectDatabases.Models.ViewModels;
 
-namespace ProjectDatabases.Models.ViewModels;
-/// <summary>
-/// View Model for OrderSummary
-/// </summary>
+// View Model for OrderSummary - Keyless
 [Keyless]
 public class OrderSummary
 {

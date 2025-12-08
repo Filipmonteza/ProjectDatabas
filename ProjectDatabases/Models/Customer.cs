@@ -1,5 +1,6 @@
 ﻿namespace ProjectDatabases.Models;
 
+// Public class with Customer Properties and a Encrypting/Decrypting - Email
 public class Customer
 {
     // Prime-Key

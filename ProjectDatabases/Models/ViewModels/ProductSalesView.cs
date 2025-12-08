@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace ProjectDatabases.Models.ViewModels;
 
-
-namespace ProjectDatabases.Models.ViewModels;
-/// <summary>
-/// View Model for ProductSalesView
-/// </summary>
+// View Model for ProductSalesView
 [Keyless]
 public class ProductSalesView
 {
