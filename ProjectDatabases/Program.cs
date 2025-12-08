@@ -37,6 +37,7 @@ static async Task OrderMenu()
         Console.WriteLine(
             "\nOrder Menu: (1). OrderList | (2). OrderAdd | (3). OrderDetails \n(4). Status-Menu | (5). OrderSummery | (6). OrderDetailView | (7). MainMenu");
         Console.WriteLine(">");
+        
         var line = Console.ReadLine()?.Trim() ?? string.Empty;
 
         if (string.IsNullOrEmpty(line))
@@ -45,7 +46,7 @@ static async Task OrderMenu()
         }
 
         var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        var cmd = parts[0].ToLowerInvariant();
+        var cmd = parts[0];
 
         switch (cmd)
         {
@@ -95,14 +96,9 @@ static async Task CustomerMenu()
             {
                 continue;
             }
-
-            if (line.Equals("exit", StringComparison.OrdinalIgnoreCase))
-            {
-                break;
-            }
-
+            
             var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var cmd = parts[0].ToLowerInvariant();
+            var cmd = parts[0];
 
             switch (cmd)
             {
@@ -161,14 +157,9 @@ static async Task CategoryMenu()
             {
                 continue;
             }
-
-            if (line.Equals("exit", StringComparison.OrdinalIgnoreCase))
-            {
-                break;
-            }
-
+            
             var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var cmd = parts[0].ToLowerInvariant();
+            var cmd = parts[0];
 
             switch (cmd)
             {
@@ -216,7 +207,6 @@ static async Task ProductMenu()
             Console.WriteLine("4. (Delete) Product.");
             Console.WriteLine("5. (TotalSales) Product.");
             Console.WriteLine("6. Main Menu.");
-            
             Console.WriteLine(">");
 
             var line = Console.ReadLine()?.Trim() ?? string.Empty;
@@ -225,14 +215,9 @@ static async Task ProductMenu()
             {
                 continue;
             }
-
-            if (line.Equals("exit", StringComparison.OrdinalIgnoreCase))
-            {
-                break;
-            }
-
+            
             var parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var cmd = parts[0].ToLowerInvariant();
+            var cmd = parts[0];
 
             switch (cmd)
             {
