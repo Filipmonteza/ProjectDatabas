@@ -19,9 +19,4 @@
       </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="DataSeeding\" />
-      <Folder Include="Services\" />
-    </ItemGroup>
-
 </Project>

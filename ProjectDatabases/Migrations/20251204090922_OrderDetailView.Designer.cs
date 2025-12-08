@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectDatabases;
 
@@ -10,9 +11,11 @@ using ProjectDatabases;
 namespace ProjectDatabases.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20251204090922_OrderDetailView")]
+    partial class OrderDetailView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.11");
@@ -35,7 +38,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Customer", b =>
@@ -64,7 +67,7 @@ namespace ProjectDatabases.Migrations
                     b.HasIndex("CustomerEmail")
                         .IsUnique();
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Order", b =>
@@ -91,7 +94,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.OrderRow", b =>
@@ -118,7 +121,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderRows", (string)null);
+                    b.ToTable("OrderRows");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Product", b =>
@@ -142,7 +145,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.ViewModels.CustomerOrderCountView", b =>

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace ProjectDatabases.Models;
+﻿namespace ProjectDatabases.Models;
 
 public class Order
 {
@@ -11,6 +8,7 @@ public class Order
     // Foreign-Key
     public int CustomerId { get; set; }
     
+    // Properties
     [Required, MaxLength(50)]
     public string? OrderStatus { get; set; }
     [Required]

@@ -1,16 +1,28 @@
-﻿using System.IO;
-using Microsoft.EntityFrameworkCore;
-using ProjectDatabases.Models;
-
-namespace ProjectDatabases;
+﻿namespace ProjectDatabases;
 
 public class StoreContext : DbContext
 {
+    // Customers table
     public DbSet<Customer> Customers => Set<Customer>();
+    
+    // Orders table
     public DbSet<Order> Orders => Set<Order>();
+    
+    // OrderRows table
     public DbSet<OrderRow> OrderRows => Set<OrderRow>();
+    
+    // Products table
     public DbSet<Product> Products => Set<Product>();
+    
+    // Categories table
     public DbSet<Category> Categories => Set<Category>();
+   
+    
+    // View OrderSummary/CustomerOrderCountView/ProductSalesView - Keyless
+    public DbSet<OrderSummary> OrderSummaries => Set<OrderSummary>();
+    public DbSet<CustomerOrderCountView> CustomerOrderCountViews=> Set<CustomerOrderCountView>();
+    public DbSet<ProductSalesView>  ProductSalesViews => Set<ProductSalesView>();
+    public DbSet<OrderDetailView> OrderDetailViews => Set<OrderDetailView>();
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -18,28 +30,66 @@ public class StoreContext : DbContext
         optionsBuilder.UseSqlite($"Filename={dbPath}");
     }
 
+    /// <summary>
+    /// Configures the SQLite database connection.
+    /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // OrderDetailsView
+        modelBuilder.Entity<OrderDetailView>(o =>
+        {
+            o.HasNoKey();
+            o.ToView("OrderDetailView");
+
+        });
+        
+        // ProductSalesView
+        modelBuilder.Entity<ProductSalesView>(p =>
+        {
+            p.HasNoKey();
+            p.ToView("ProductSalesView");
+        });
+        
+        // OrderSummary View
+        modelBuilder.Entity<OrderSummary>(o =>
+        {
+            o.HasNoKey(); // sMissing PK has no prime-key
+            o.ToView("OrderSummaryView"); // kopplar tabellen mot SQLite
+        });
+        
+        // CustomerOrderCountViews
+        modelBuilder.Entity<CustomerOrderCountView>(c =>
+        {   
+            c.HasNoKey(); // Missing PK has no prime-key
+            c.ToView("CustomerOrderCountView"); // kopplar tabellen mot SQLite
+        });
+        
         modelBuilder.Entity<Customer>(c =>
         {
+            // Prime-Key
             c.HasKey(x => x.CustomerId);
             
+            // Properties
             c.Property(x=> x.CustomerName).HasMaxLength(50);
             c.Property(x => x.CustomerAddress).HasMaxLength(50);
             c.Property(x => x.CustomerEmail).HasMaxLength(50);
             
+            // UNIQUE
             c.HasIndex(x => x.CustomerEmail).IsUnique();
 
         });
 
         modelBuilder.Entity<Order>(o =>
-        {
+        {   
+            //Prime-Key
             o.HasKey(x => x.OrderId);
-
+            
+            //Properties
             o.Property(x => x.OrderDate);
             o.Property(x => x.OrderTotalPrice).IsRequired();
             o.Property(x => x.OrderStatus).IsRequired().HasMaxLength(50);
             
+            // Foreign-Key
             o.HasOne(x=>x.Customer)
                 .WithMany(x=>x.Orders)
                 .HasForeignKey(x => x.CustomerId)
@@ -48,8 +98,10 @@ public class StoreContext : DbContext
 
         modelBuilder.Entity<OrderRow>(o =>
         {
+            // Prime-Key
             o.HasKey(x => x.OrderRowId);
-
+            
+            // Properties
             o.Property(x => x.OrderRowUnitPrice).IsRequired();
             o.Property(x => x.OrderRowQuantity).IsRequired();
             
@@ -86,13 +138,9 @@ public class StoreContext : DbContext
             // Prime-Key
             c.HasKey(x => x.CategoryId);
             
+            // Properties
             c.Property(x => x.CategoryName).HasMaxLength(50).IsRequired();
             c.Property(x => x.Description).HasMaxLength(50);
         });
-
-
-
-
-
     }
 }

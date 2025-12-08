@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ProjectDatabases.Models;
+﻿namespace ProjectDatabases.Models;
 
 public class OrderRow
 {

@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿namespace ProjectDatabases.Models;
 
-namespace ProjectDatabases.Models;
-
+// Public class for Category with properties
 public class Category
 {
     // Prime-Key

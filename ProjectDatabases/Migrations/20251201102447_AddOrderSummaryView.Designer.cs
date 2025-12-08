@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectDatabases;
 
@@ -10,9 +11,11 @@ using ProjectDatabases;
 namespace ProjectDatabases.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20251201102447_AddOrderSummaryView")]
+    partial class AddOrderSummaryView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.11");
@@ -35,7 +38,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Customer", b =>
@@ -64,7 +67,7 @@ namespace ProjectDatabases.Migrations
                     b.HasIndex("CustomerEmail")
                         .IsUnique();
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Order", b =>
@@ -91,7 +94,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.OrderRow", b =>
@@ -118,7 +121,31 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderRows", (string)null);
+                    b.ToTable("OrderRows");
+                });
+
+            modelBuilder.Entity("ProjectDatabases.Models.OrderSummary", b =>
+                {
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("TEXT");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("OrderSummaryView", (string)null);
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Product", b =>
@@ -142,92 +169,7 @@ namespace ProjectDatabases.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
-                });
-
-            modelBuilder.Entity("ProjectDatabases.Models.ViewModels.CustomerOrderCountView", b =>
-                {
-                    b.Property<string>("CustomerEmail")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("NumberOfOrders")
-                        .HasColumnType("INTEGER");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("CustomerOrderCountView", (string)null);
-                });
-
-            modelBuilder.Entity("ProjectDatabases.Models.ViewModels.OrderDetailView", b =>
-                {
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("TotalRows")
-                        .HasColumnType("INTEGER");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("OrderDetailView", (string)null);
-                });
-
-            modelBuilder.Entity("ProjectDatabases.Models.ViewModels.OrderSummary", b =>
-                {
-                    b.Property<string>("CustomerEmail")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("OrderTotalPrice")
-                        .HasColumnType("TEXT");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("OrderSummaryView", (string)null);
-                });
-
-            modelBuilder.Entity("ProjectDatabases.Models.ViewModels.ProductSalesView", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("TotalQuantitySold")
-                        .HasColumnType("INTEGER");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("ProductSalesView", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ProjectDatabases.Models.Order", b =>
