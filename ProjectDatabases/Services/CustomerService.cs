@@ -66,7 +66,7 @@ public class CustomerService
     }
     
     /// <summary>
-    /// Edits a exsisting Customer
+    /// Edits an existing Customers
     /// </summary>
     /// <param name="customerId"></param>
     public static async Task CustomerEditAsync(int customerId)
@@ -118,7 +118,7 @@ public class CustomerService
     }
     
     /// <summary>
-    /// Deletes a Customer by Id
+    /// Deletes a Customer from the database
     /// </summary>
     /// <param name="deleteId"></param>
     public static async Task CustomerDeleteAsync(int deleteId)

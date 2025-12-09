@@ -1,9 +1,10 @@
 ﻿using ProjectDatabases.DataSeeding;
 using ProjectDatabases.Services;
 
+// Display the full database path for debugging and verification
 Console.WriteLine(Path.Combine(AppContext.BaseDirectory, "Shop.db"));
 
-// Extracting seeding - from (OriginalSeed).
+// Run initial database seeding (creates DB + inserts sample data if needed)
 await OrginalSeed.SeedAsync();
 
 // Main Menu with a switch to redirect to sub-menus.
@@ -52,12 +53,15 @@ static async Task OrderMenu()
         switch (cmd)
         {
             case "1":
+                // Display all orders
                 await OrderService.OrderListAsync();
                 break;
             case "2":
+                // Create a new order
                 await OrderService.OrderAddAsync();
                 break;
             case"3":
+                // Show detailed information for a specific order
                 await OrderService.OrderListAsync(); // Call the List Of Customers before Editing.
                 if (parts.Length < 2 || !int.TryParse(parts[1], out int detailsId))
                 {
@@ -67,15 +71,19 @@ static async Task OrderMenu()
                 await OrderService.OrderDetailsAsync(detailsId);
                 break;
             case "4":
+                // Submenu for managing order status
                 await OrderService.StatusMenu();
                 break;
             case "5":
+                // Summary view (aggregated data)
                 await OrderService.ListOrderSummery();
                 break;
             case"6":
+                // Includes order + order items in one combined view
                 await OrderService.OrderViewDetail();
                 break;
             case "7":
+                // Return to main menu
                 return;
             default:
                 Console.WriteLine("Unkown Command.");
@@ -105,12 +113,15 @@ static async Task CustomerMenu()
             switch (cmd)
             {
                 case "1":
+                    // Display all customers
                     await CustomerService.CustomerListAsync();
                     break;
                 case "2":
+                    // Add a new customer
                     await CustomerService.CustomerAddAsync();
                     break;
                 case "3":
+                    // Edit customer details
                     await CustomerService.CustomerListAsync(); // Call the List Of Customers before Editing.
                     if (parts.Length < 2 || !int.TryParse(parts[1], out int editId))
                     {
@@ -120,6 +131,7 @@ static async Task CustomerMenu()
                     await CustomerService.CustomerEditAsync(editId);
                     break;
                 case "4":
+                    // Delete a customer
                     if (parts.Length < 2 || !int.TryParse(parts[1], out int deleteId))
                     {
                         Console.WriteLine("Usage: User Entry (Delete) = 4, (ID Number) -> (Enter) >");
@@ -129,6 +141,7 @@ static async Task CustomerMenu()
                     await CustomerService.CustomerDeleteAsync(deleteId);
                     break;
                 case "5":
+                    // View number of orders per customer
                     await CustomerService.CustomerOrderCountViews();
                     break;
                 case "6":
@@ -230,6 +243,7 @@ static async Task ProductMenu()
                     await ProductService.ListProductAsync();
                     break;
                  case "2":
+                    // Display categories first (for selection when adding a product)
                     await CategoryService.ListCategoryAsync(); 
                     await ProductService.AddProductAsync();
                     break;
@@ -252,6 +266,7 @@ static async Task ProductMenu()
                     await ProductService.DeleteProductAsync(deleteId);
                      break;
                 case "5":
+                    // View aggregated sales per product
                     await  ProductService.ProductSalesViews();
                     break;
                 case "6":
