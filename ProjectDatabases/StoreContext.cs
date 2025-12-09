@@ -40,7 +40,6 @@ public class StoreContext : DbContext
         {
             o.HasNoKey();
             o.ToView("OrderDetailView");
-
         });
         
         // ProductSalesView
