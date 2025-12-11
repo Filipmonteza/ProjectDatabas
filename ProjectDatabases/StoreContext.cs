@@ -72,6 +72,8 @@ public class StoreContext : DbContext
             c.Property(x=> x.CustomerName).HasMaxLength(50);
             c.Property(x => x.CustomerAddress).HasMaxLength(50);
             c.Property(x => x.CustomerEmail).HasMaxLength(50);
+            c.Property(x=> x.SsnHash).IsRequired().HasMaxLength(50);
+            c.Property(x => x.SsnSalt).IsRequired().HasMaxLength(50);
             
             // UNIQUE
             c.HasIndex(x => x.CustomerEmail).IsUnique();

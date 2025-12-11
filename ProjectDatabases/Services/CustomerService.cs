@@ -14,17 +14,19 @@ public class CustomerService
             .ToListAsync();
         
         Console.WriteLine("\n ==== Customers ====");
-        Console.WriteLine("ID | Name | Address | Email | Orders");
+        Console.WriteLine("ID | Name | Address | Email | Orders | SSN Hash | SSN Salt");
         
         // Display each customer
         foreach (var customer in customers)
         {
-            Console.WriteLine($"{customer.CustomerId}, {customer.CustomerName}, {customer.CustomerAddress}, {customer.CustomerEmail}");
+            Console.WriteLine($"{customer.CustomerId}, {customer.CustomerName}, {customer.CustomerAddress}, {customer.CustomerEmail}, {customer.SsnHash}, {customer.SsnSalt}");
         }
     }
     
     /// <summary>
     /// Adds a new customer to the database
+    /// Rollback implements if an error occurs
+    /// Social Security Number (SSN) is hashed with salt for security
     /// </summary>
     public static async Task CustomerAddAsync()
     {
@@ -50,12 +52,24 @@ public class CustomerService
             {
                 Console.WriteLine("Customer Email is required (Max 50). ");
             }
+            
+            Console.WriteLine("Please enter the Social Security Number (SSN) for the customer:");
+            var ssnInput = Console.ReadLine()?.Trim() ?? string.Empty;
+            if (string.IsNullOrEmpty(ssnInput))
+            {
+                Console.WriteLine("SSN is required.");
+                return;
+            }
+            
+            var salt = Hashinghelper.Generatesalt();
+            var ssnHash = Hashinghelper.HasWithSalt(ssnInput, salt);
+            
         
             Console.WriteLine("Customer Address (Optional): ");
             var customerAddress = Console.ReadLine()?.Trim() ?? string.Empty;
         
             // Adds a new customer entity
-            db.Customers.Add(new Customer {CustomerName = customerName, CustomerAddress = customerAddress, CustomerEmail = customeremail});
+            db.Customers.Add(new Customer {CustomerName = customerName, CustomerAddress = customerAddress, CustomerEmail = customeremail, SsnHash = ssnHash, SsnSalt = salt});
             
             await db.SaveChangesAsync();
             await transaction.CommitAsync();
