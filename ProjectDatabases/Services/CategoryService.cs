@@ -78,7 +78,7 @@ public class CategoryService
             return;
         }
         
-        // Show current description and accept new input
+        // Show current CategoryName and accept new input
         Console.WriteLine($"{category.CategoryName}");
         var categoryName = Console.ReadLine()?.Trim() ?? string.Empty;
         if (!string.IsNullOrEmpty(categoryName))
@@ -86,6 +86,7 @@ public class CategoryService
             category.CategoryName = categoryName;
         }
         
+        // show current description and accept new input
         Console.WriteLine($"{category.Description}");
         var categoryDescription = Console.ReadLine()?.Trim() ?? string.Empty;
         if (!string.IsNullOrEmpty(categoryDescription))
@@ -116,7 +117,8 @@ public class CategoryService
         using var db =  new StoreContext();
         
         // Find category to delete
-        var category = await db.Categories.FirstOrDefaultAsync(c => c.CategoryId == id);
+        var category = await db.Categories
+            .FirstOrDefaultAsync(c => c.CategoryId == id);
         if (category == null)
         {
             Console.WriteLine("Category not found");

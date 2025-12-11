@@ -14,7 +14,7 @@ public class CustomerService
             .ToListAsync();
         
         Console.WriteLine("\n ==== Customers ====");
-        Console.WriteLine("ID | Name | Address | Email");
+        Console.WriteLine("ID | Name | Address | Email | Orders");
         
         // Display each customer
         foreach (var customer in customers)
@@ -166,4 +166,60 @@ public class CustomerService
             Console.WriteLine($"{customer.CustomerId} | {customer.CustomerName} | {customer.CustomerEmail} | {customer.NumberOfOrders}");
         }
     }
+    
+    public static async Task CustomerListAndOrdersAsync()
+    {
+        using var db = new StoreContext();
+        
+        // If you want to Seed 100 Customers with 2 Orders each, uncomment below
+        // for (int i = 1; i <= 100; i++) // Create 5 orders
+        // {
+        //     var customers = new Customer
+        //     {
+        //         CustomerName = $"Test Customer {i}",
+        //         CustomerAddress = $"Street {i}",
+        //         CustomerEmail = $"customer1{i}@mail.com",
+        //         Orders = new List<Order>()
+        //     };
+        //
+        //     // Create 2 orders per customer
+        //     for (int j = 1; j <= 2; j++) 
+        //     {
+        //         customers.Orders.Add(new Order
+        //         {
+        //             OrderDate = DateTime.Now.AddDays(-j),
+        //             OrderTotalPrice = 100 + j * 10,
+        //             OrderStatus = "Pending"
+        //         });
+        //     }
+        //
+        //     db.Customers.Add(customers);
+        // }
+        //
+        // await db.SaveChangesAsync();
+        
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+
+        var customer = await db.Customers
+            .AsNoTracking()
+            .OrderBy(c => c.CustomerId)
+            .Include(x => x.Orders)
+            .ToListAsync();
+        
+        Console.WriteLine("\n ==== Customers and their Orders ====");
+        Console.WriteLine("ID | Name | Address | Email | Orders");
+        
+        sw.Stop();
+        Console.WriteLine($"Time elapsed: {sw.ElapsedMilliseconds} ms");
+        
+        foreach(var cust in customer)
+        {
+            if(cust.Orders != null)
+            {
+                Console.WriteLine($"{cust.CustomerId}, {cust.CustomerName}, {cust.CustomerAddress}, {cust.CustomerEmail}, {cust.Orders?.Count}");
+                
+            }
+        }
+    }
 }
+

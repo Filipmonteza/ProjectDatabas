@@ -74,7 +74,8 @@ public class ProductService
         }
 
         // Ensure category exists
-        var categoryExists = await db.Categories.AnyAsync(c => c.CategoryId == categoryId);
+        var categoryExists = await db.Categories
+            .AnyAsync(c => c.CategoryId == categoryId);
         if (!categoryExists)
         {
             Console.WriteLine("CategoryId does not exist.");
@@ -109,7 +110,8 @@ public class ProductService
         using var db = new StoreContext();
         
         // Fetch the product
-        var product = await db.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+        var product = await db.Products
+            .FirstOrDefaultAsync(p => p.ProductId == productId);
         if (product == null)
         {
             Console.WriteLine("Product not found.");
@@ -138,7 +140,9 @@ public class ProductService
 
         if (int.TryParse(categoryInput, out var categoryId))
         {
-            var categoryExists = await db.Categories.AnyAsync(c => c.CategoryId == categoryId);
+            var categoryExists = await db
+                .Categories
+                .AnyAsync(c => c.CategoryId == categoryId);
             if (categoryExists)
             {
                 product.CategoryId = categoryId;
@@ -167,7 +171,9 @@ public class ProductService
     {
         using var db = new StoreContext();
 
-        var product = await db.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+        var product = await db
+            .Products
+            .FirstOrDefaultAsync(p => p.ProductId == productId);
         if (product == null)
         {
             Console.WriteLine("Product not found.");

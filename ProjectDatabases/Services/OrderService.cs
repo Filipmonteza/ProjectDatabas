@@ -26,6 +26,9 @@ public class OrderService
     {
         using var db = new StoreContext();
         
+        // Start the stopwatch to measure query execution time
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+        
         var orders = await db.Orders
             .AsNoTracking()
             .OrderBy(c => c.OrderId)
@@ -34,7 +37,11 @@ public class OrderService
         
         Console.WriteLine("\n ==== Orders ====");
         Console.WriteLine("OrderId | Customer-Name | OrderDate| TotalAmount | Status ");
-
+        
+        // Stop the stopwatch and display elapsed time
+        sw.Stop();
+        Console.WriteLine($"Total time: {sw.ElapsedMilliseconds} ms");
+        
         foreach (var order in orders)
         {
             Console.WriteLine($"{order.OrderId} | {order.Customer?.CustomerName} | {order.OrderDate} | {order.OrderTotalPrice} | {order.OrderStatus}");
@@ -48,14 +55,14 @@ public class OrderService
     public static async Task OrderDetailsAsync(int detailsId)
     {
         using var db = new StoreContext();
-
+        
         var orderdetails = await db.Orders
             .AsNoTracking()
             .OrderBy(x => x.OrderId)
             .Include(o => o.OrderRows)
             .ThenInclude(x => x.Product)
             .ToListAsync();
-
+        
         Console.WriteLine("Order Details:");
         Console.WriteLine("OrderID | ProductName | Quantity | Price per unit | Row Total");
         
@@ -84,7 +91,7 @@ public class OrderService
         await using var transaction = await db.Database.BeginTransactionAsync();
         try
         {
-         Console.WriteLine("Enter Customer ID: ");
+            Console.WriteLine("Enter Customer ID: ");
             if (!int.TryParse(Console.ReadLine(), out var customerId))
             {
                 Console.WriteLine("Invalid Customer ID.");
@@ -272,10 +279,10 @@ public class OrderService
                 .ThenInclude(or => or.Product)
                 .OrderByDescending(o => o.OrderDate)
                 .AsNoTracking();
-
+             
             var totalCount = await query.CountAsync();
             var totalPages = Math.Max(1, (int)Math.Ceiling(totalCount / (double)pageSize));
-
+            
             if (currentPage > totalPages) currentPage = totalPages;
 
             var pageItems = await query
