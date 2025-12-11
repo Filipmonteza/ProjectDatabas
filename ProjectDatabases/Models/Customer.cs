@@ -24,4 +24,12 @@ public class Customer
 
     // Navigation
     public List<Order>? Orders { get; set; } = new();
+    
+    // Hash Property
+    [Required, MaxLength(50)]
+    public string SsnHash{ get; set; } = string.Empty;
+    
+    [Required, MaxLength(50)]
+    public string SsnSalt { get; set; } = string.Empty
+        ;
 }
