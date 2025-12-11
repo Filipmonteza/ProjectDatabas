@@ -137,7 +137,6 @@ static async Task CustomerMenu()
                         Console.WriteLine("Usage: User Entry (Delete) = 4, (ID Number) -> (Enter) >");
                         break;
                     }
-
                     await CustomerService.CustomerDeleteAsync(deleteId);
                     break;
                 case "5":

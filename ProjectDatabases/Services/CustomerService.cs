@@ -171,6 +171,21 @@ public class CustomerService
         }
     }
     
+    /// <summary>
+    /// Retrieves and displays all customers together with their orders.
+    /// </summary>
+    /// <remarks>
+    /// This method performs a read-only query using <c>AsNoTracking()</c> to improve performance
+    /// when no entity updates are needed. It loads customers ordered by CustomerId and includes
+    /// their associated orders via <c>Include(x => x.Orders)</c>.
+    ///
+    /// A stopwatch (System.Diagnostics.Stopwatch) is used to measure query execution time,
+    /// useful when verifying performance or comparing tracking vs. no-tracking queries.
+    ///
+    /// The commented section at the top contains optional seed logic that can be enabled to
+    /// generate a large test dataset (100 customers with 2 orders each). This is helpful for
+    /// pagination, performance testing, and verifying query behavior with high row counts.
+    /// </remarks>
     public static async Task CustomerListAndOrdersAsync()
     {
         using var db = new StoreContext();
