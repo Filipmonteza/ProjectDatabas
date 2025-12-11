@@ -89,6 +89,7 @@ public class OrderService
         using var db = new StoreContext();
  
         await using var transaction = await db.Database.BeginTransactionAsync();
+        
         try
         {
             Console.WriteLine("Enter Customer ID: ");
@@ -161,7 +162,6 @@ public class OrderService
             // Save order and rows
             db.Orders.Add(newOrder);
             await db.SaveChangesAsync();
- 
             await transaction.CommitAsync();
  
             Console.WriteLine($" Order ID: {newOrder.OrderId} created for {customer.CustomerName} with total {newOrder.OrderTotalPrice} Status {newOrder.OrderStatus}");
