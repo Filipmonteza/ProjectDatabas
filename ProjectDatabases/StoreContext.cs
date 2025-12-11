@@ -141,5 +141,12 @@ public class StoreContext : DbContext
             c.Property(x => x.CategoryName).HasMaxLength(50).IsRequired();
             c.Property(x => x.Description).HasMaxLength(50);
         });
+        
+        // Indexes calls the database to create indexes on the specified columns and speeds up queries
+        modelBuilder.Entity<Order>().HasIndex(o => o.OrderDate);
+        modelBuilder.Entity<Order>().HasIndex(o => o.CustomerId);
+
+        modelBuilder.Entity<Customer>().HasIndex(o => o.CustomerEmail);
+        modelBuilder.Entity<Customer>().HasIndex(o => o.CustomerName);
     }
 }
