@@ -49,6 +49,7 @@ public class CategoryService
             CategoryName = categoryName,
             Description = description
         });
+        
         try
         {
             // Persist changes to the database

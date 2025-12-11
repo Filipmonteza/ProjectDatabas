@@ -35,68 +35,72 @@ public class ProductService
     public static async Task AddProductAsync()
     {
         using var db = new StoreContext();
-     
-        // Display existing products before adding a new one
-        var rows = await db.Products
-            .AsNoTracking()
-            .OrderBy(product => product.ProductId)
-            .ToListAsync();
-
-        Console.WriteLine("ProductId | Name | Price | CategoryId");
-        foreach (var row in rows)
-        {
-            Console.WriteLine($"{row.ProductId} | {row.ProductName} | {row.ProductPrice} | {row.CategoryId}");
-        }
-    
-        // Product name input
-        Console.WriteLine("Enter product name:");
-        var productName = Console.ReadLine()?.Trim() ?? string.Empty;
-        if (string.IsNullOrEmpty(productName) || productName.Length > 100)
-        {
-            Console.WriteLine("Product name is required (max 100 characters).");
-            return;
-        }
+        await using var transaction = await db.Database.BeginTransactionAsync();
         
-        // Product price input
-        Console.WriteLine("Enter price:");
-        if (!decimal.TryParse(Console.ReadLine(), out var productPrice))
-        {
-            Console.WriteLine("Invalid price.");
-            return;
-        }
-     
-        // CategoryId input
-        Console.WriteLine("Enter CategoryId:");
-        if (!int.TryParse(Console.ReadLine(), out var categoryId))
-        {
-            Console.WriteLine("Invalid CategoryId.");
-            return;
-        }
-
-        // Ensure category exists
-        var categoryExists = await db.Categories
-            .AnyAsync(c => c.CategoryId == categoryId);
-        if (!categoryExists)
-        {
-            Console.WriteLine("CategoryId does not exist.");
-            return;
-        }
-        
-        // Add new product
-        db.Products.Add(new Product
-        {
-            ProductName = productName,
-            ProductPrice = productPrice,
-            CategoryId = categoryId
-        });
-
         try
         {
+            // Display existing products before adding a new one
+            var rows = await db.Products
+                .AsNoTracking()
+                .OrderBy(product => product.ProductId)
+                .ToListAsync();
+
+            Console.WriteLine("ProductId | Name | Price | CategoryId");
+            foreach (var row in rows)
+            {
+                Console.WriteLine($"{row.ProductId} | {row.ProductName} | {row.ProductPrice} | {row.CategoryId}");
+            }
+    
+            // Product name input
+            Console.WriteLine("Enter product name:");
+            var productName = Console.ReadLine()?.Trim() ?? string.Empty;
+            if (string.IsNullOrEmpty(productName) || productName.Length > 100)
+            {
+                Console.WriteLine("Product name is required (max 100 characters).");
+                return;
+            }
+        
+            // Product price input
+            Console.WriteLine("Enter price:");
+            if (!decimal.TryParse(Console.ReadLine(), out var productPrice))
+            {
+                Console.WriteLine("Invalid price.");
+                return;
+            }
+     
+            // CategoryId input
+            Console.WriteLine("Enter CategoryId:");
+            if (!int.TryParse(Console.ReadLine(), out var categoryId))
+            {
+                Console.WriteLine("Invalid CategoryId.");
+                return;
+            }
+
+            // Ensure category exists
+            var categoryExists = await db.Categories
+                .AnyAsync(c => c.CategoryId == categoryId);
+            if (!categoryExists)
+            {
+                Console.WriteLine("CategoryId does not exist.");
+                return;
+            }
+        
+            // Add new product
+            db.Products.Add(new Product
+            {
+                ProductName = productName,
+                ProductPrice = productPrice,
+                CategoryId = categoryId
+            });
+            
             await db.SaveChangesAsync();
+            await transaction.CommitAsync();
             Console.WriteLine("Product added successfully!");
+            
         }
         catch (DbUpdateException exception)
         {
+            await transaction.RollbackAsync();
             Console.WriteLine("Database error: " + exception.GetBaseException().Message);
         }
     }
@@ -152,7 +156,7 @@ public class ProductService
                 Console.WriteLine("Invalid CategoryId. Keeping previous value.");
             }
         }
-
+        
         try
         {
             await db.SaveChangesAsync();

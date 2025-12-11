@@ -28,39 +28,43 @@ public class CustomerService
     /// </summary>
     public static async Task CustomerAddAsync()
     {
-        Console.WriteLine("Customer Name: ");
-        var customerName = Console.ReadLine()?.Trim() ?? string.Empty;
-
-        // Validate CustomerName
-        if (string.IsNullOrEmpty(customerName) || customerName.Length > 50)
-        {
-            Console.WriteLine("Customer Name is required (Max 50). ");
-        }
-        
-        Console.WriteLine("Customer Email: ");
-        var customeremail = Console.ReadLine()?.Trim() ?? string.Empty;
-        
-        // Validate CustomerEmail
-        if (string.IsNullOrEmpty(customeremail) || customeremail.Length > 50)
-        {
-            Console.WriteLine("Customer Email is required (Max 50). ");
-        }
-        
-        Console.WriteLine("Customer Address (Optional): ");
-        var customerAddress = Console.ReadLine()?.Trim() ?? string.Empty;
-
         using var db = new StoreContext();
-        
-        // Adds a new customer entity
-        db.Customers.Add(new Customer {CustomerName = customerName, CustomerAddress = customerAddress, CustomerEmail = customeremail});
-        
+        await using var transaction = await db.Database.BeginTransactionAsync();
+
         try
         {
+            Console.WriteLine("Customer Name: ");
+            var customerName = Console.ReadLine()?.Trim() ?? string.Empty;
+
+            // Validate CustomerName
+            if (string.IsNullOrEmpty(customerName) || customerName.Length > 50)
+            {
+                Console.WriteLine("Customer Name is required (Max 50). ");
+            }
+        
+            Console.WriteLine("Customer Email: ");
+            var customeremail = Console.ReadLine()?.Trim() ?? string.Empty;
+        
+            // Validate CustomerEmail
+            if (string.IsNullOrEmpty(customeremail) || customeremail.Length > 50)
+            {
+                Console.WriteLine("Customer Email is required (Max 50). ");
+            }
+        
+            Console.WriteLine("Customer Address (Optional): ");
+            var customerAddress = Console.ReadLine()?.Trim() ?? string.Empty;
+        
+            // Adds a new customer entity
+            db.Customers.Add(new Customer {CustomerName = customerName, CustomerAddress = customerAddress, CustomerEmail = customeremail});
+            
             await db.SaveChangesAsync();
+            await transaction.CommitAsync();
             Console.WriteLine("Customer Added Successfully");
+            
         }
         catch (DbUpdateException exception)
         {
+            await transaction.RollbackAsync();
             Console.WriteLine("Db Error (Maby duplicate)" + exception.Message);
         }
     }
