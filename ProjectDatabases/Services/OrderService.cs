@@ -78,80 +78,92 @@ public class OrderService
     public static async Task OrderAddAsync()
     {
         await CustomerService.CustomerListAsync();
-
+ 
         using var db = new StoreContext();
-        Console.WriteLine("Enter Customer ID: ");
-        if (!int.TryParse(Console.ReadLine(), out var customerId))
+ 
+        await using var transaction = await db.Database.BeginTransactionAsync();
+        try
         {
-            Console.WriteLine("Invalid Customer ID.");
-            return;
-        }
-        
-        var customer = await db.Customers.FindAsync(customerId);
-        if (customer == null)
-        {
-            Console.WriteLine("Customer not found.");
-            return;
-        }
-
-        Console.WriteLine("Product available: ");
-        var products = await db.Products.AsNoTracking()
-            .OrderBy(p => p.ProductId)
-            .ToListAsync();
-
-        Console.WriteLine("ProductId | ProductName | ProductPrice ");
-        foreach (var product in products)
-        {
-            Console.WriteLine($"{product.ProductId} | {product.ProductName} | {product.ProductPrice} ");
-        }
-        
-        var newOrder = new Order
-        {
-            OrderDate = DateTime.Now,
-            CustomerId = customer.CustomerId,
-            OrderStatus = "Pending",
-            OrderRows = new List<OrderRow>()
-        };
-        
-        while (true)
-        {
-            Console.WriteLine("Enter Product ID, Or 'done' to exit:");
-            var input = Console.ReadLine();
-            if (input?.ToLower() == "done") break;
-
-            if (!int.TryParse(input, out var productId))
+         Console.WriteLine("Enter Customer ID: ");
+            if (!int.TryParse(Console.ReadLine(), out var customerId))
             {
-                Console.WriteLine("Invalid Product ID.");
-                continue;
+                Console.WriteLine("Invalid Customer ID.");
+                return;
             }
-
-            var product = await db.Products.FindAsync(productId);
-            if (product == null)
+ 
+            var customer = await db.Customers.FindAsync(customerId);
+            if (customer == null)
             {
-                Console.WriteLine("Product not found.");
-                continue;
+                Console.WriteLine("Customer not found.");
+                return;
             }
-
-            Console.WriteLine("Enter Quantity: ");
-            if (!int.TryParse(Console.ReadLine(), out int orderRowQuantity))
+ 
+            Console.WriteLine("Product available: ");
+            var products = await db.Products.AsNoTracking()
+                .OrderBy(p => p.ProductId)
+                .ToListAsync();
+ 
+            Console.WriteLine("ProductId | ProductName | ProductPrice ");
+            foreach (var product in products)
             {
-                Console.WriteLine("Invalid Quantity.");
-                continue;
+                Console.WriteLine($"{product.ProductId} | {product.ProductName} | {product.ProductPrice} ");
             }
-            
-            newOrder.OrderRows.Add(new OrderRow
+ 
+            var newOrder = new Order
             {
-                ProductId = productId,
-                OrderRowQuantity = orderRowQuantity,
-                OrderRowUnitPrice = product.ProductPrice
-            });
+                OrderDate = DateTime.Now,
+                CustomerId = customer.CustomerId,
+                OrderStatus = "Pending",
+                OrderRows = new List<OrderRow>()
+            };
+ 
+            while (true)
+            {
+                Console.WriteLine("Enter Product ID, Or 'done' to exit:");
+                var input = Console.ReadLine();
+                if (input?.ToLower() == "done") break;
+ 
+                if (!int.TryParse(input, out var productId))
+                {
+                    Console.WriteLine("Invalid Product ID.");
+                    continue;
+                }
+ 
+                var product = await db.Products.FindAsync(productId);
+                if (product == null)
+                {
+                    Console.WriteLine("Product not found.");
+                    continue;
+                }
+ 
+                Console.WriteLine("Enter Quantity: ");
+                if (!int.TryParse(Console.ReadLine(), out int orderRowQuantity))
+                {
+                    Console.WriteLine("Invalid Quantity.");
+                    continue;
+                }
+ 
+                newOrder.OrderRows.Add(new OrderRow
+                {
+                    ProductId = productId,
+                    OrderRowQuantity = orderRowQuantity,
+                    OrderRowUnitPrice = product.ProductPrice
+                });
+            }
+ 
+            // Save order and rows
+            db.Orders.Add(newOrder);
+            await db.SaveChangesAsync();
+ 
+            await transaction.CommitAsync();
+ 
+            Console.WriteLine($" Order ID: {newOrder.OrderId} created for {customer.CustomerName} with total {newOrder.OrderTotalPrice} Status {newOrder.OrderStatus}");
         }
-        
-        // Save order and rows
-        db.Orders.Add(newOrder);
-        await db.SaveChangesAsync();
-        
-        Console.WriteLine($" Order ID: {newOrder.OrderId} created for {customer.CustomerName} with total {newOrder.OrderTotalPrice} Status {newOrder.OrderStatus}");
+        catch (Exception exception)
+        {
+            await transaction.RollbackAsync();
+            Console.WriteLine($"Error occurred. Transaction rolled back. Message: {exception.Message}");
+        }
     }
     
     /// <summary>
@@ -296,7 +308,7 @@ public class OrderService
                 else Console.WriteLine("Already on first page.");
                 continue;
             }
-
+            
             Console.WriteLine("Unknown command.");
         }
     }
