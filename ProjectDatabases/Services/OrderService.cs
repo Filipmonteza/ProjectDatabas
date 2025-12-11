@@ -262,10 +262,11 @@ public class OrderService
     }
     
     /// <summary>
-    /// // Provides paginated order browsing.
+    /// Provides interactive paginated browsing of orders.
+    /// Loads customer and order row details.
+    /// Uses Skip/Take pagination and AsNoTracking for performance.
+    /// User can navigate with n/p/q.
     /// </summary>
-    /// <param name="page"></param>
-    /// <param name="pageSize"></param>
     public static async Task OrdersPage(int page, int pageSize)
     {
         using var db = new StoreContext();
